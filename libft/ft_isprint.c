@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.c>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 22:18:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/03/18 22:18:37 by nimai            ###   ########.fr       */
+/*   Created: 2022/12/14 11:28:34 by nimai             #+#    #+#             */
+/*   Updated: 2022/12/14 11:28:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minitalk.h"
-
-int	main(int ac, char **av)
+int	ft_isprint(int c)
 {
-
-	return (0);
+	if (c >= 32 && c <= 126)
+		return (1);
+	else
+		return (0);
 }

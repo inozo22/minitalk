@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 22:18:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/03/18 22:18:37 by nimai            ###   ########.fr       */
+/*   Created: 2023/02/18 18:59:28 by nimai             #+#    #+#             */
+/*   Updated: 2023/02/18 18:59:28 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minitalk.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-
-	return (0);
+	while (*lst)
+		lst = &((*lst)->next);
+	*lst = new;
 }

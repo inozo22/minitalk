@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 22:18:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/03/18 22:18:37 by nimai            ###   ########.fr       */
+/*   Created: 2023/02/18 18:59:59 by nimai             #+#    #+#             */
+/*   Updated: 2023/02/18 18:59:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minitalk.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-
-	return (0);
+	if (lst)
+		del(lst->content);
+	free(lst);
 }

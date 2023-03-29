@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
+/*   By: nimai <nimai@student.42urduliz.c>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/18 22:18:37 by nimai             #+#    #+#             */
-/*   Updated: 2023/03/18 22:18:37 by nimai            ###   ########.fr       */
+/*   Created: 2022/12/14 11:34:14 by nimai             #+#    #+#             */
+/*   Updated: 2022/12/14 11:34:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minitalk.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+char	*ft_strdup(const char *s)
 {
+	char	*t;
+	size_t	len;
+	size_t	i;
 
-	return (0);
+	len = ft_strlen(s);
+	t = malloc(len + 1);
+	i = 0;
+	if (t == NULL)
+		return (NULL);
+	while (s[i])
+	{
+		t[i] = s[i];
+		i++;
+	}
+	t[i] = '\0';
+	return (t);
 }
