@@ -10,7 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= pipex
+TARGET1		:= server
+TARGET2		:= client
 
 SRCDIR		:= ./src/
 SRC			:=  \
@@ -39,7 +40,7 @@ YELLOW		:= \033[1;33m
 BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 
-all: $(OBJDIR) $(NAME)
+all: $(TARGET1) $(TARGET2) 
 
 $(OBJDIR):
 	@mkdir -p $@
@@ -61,8 +62,10 @@ clean:
 
 fclean: clean
 	@make -C $(LIBFT) fclean
-	@rm -rf ./pipex.dSYM
-	@rm -f $(NAME)
+	@rm -rf ./server.dSYM
+	@rm -rf ./client.dSYM
+	@rm -f $(TARGET1)
+	@rm -f $(TARGET2)
 	@echo "$(RED)Deleted $(YELLOW)$(NAME) $(RM_COL)binary ✔️"
 re:
 	@make fclean all
