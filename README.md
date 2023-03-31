@@ -75,8 +75,41 @@ No he hecho nada
 - (How many numbers of rows or columns I have to accept?)
 - 
 
-## 4. Simple plan
+## 4. List of signals on linux
 
+|Number|Name|Default Action|Description|
+|-----|-----|-----|-----|
+|1|SIGHUP|Terminate|Terminal line hangup or parent process terminated|
+|2|SIGINT|Terminate|Interrupt from keyboard(ctrl-c)|
+|3|SIGQUIT|Terminate|Quit from keyboard(ctrl-\)|
+|4|SIGILL|Terminate|Illegal instruction|
+|5|SIGTRAP|Core|Trace trap|
+|6|SIGABRT|Core|Signal from abort function|
+|7|SIGBUS|Terminate|Bus error|
+|8|SIGFPE|Core|Floating-point exception|
+|9|SIGKILL|Terminate|Kill program|
+|10|SIGUSR1|Terminate|User-defined signal 1|
+|11|SIGSEGV|Core|Invalid memory reference (segfault)|
+|12|SIGUSER2|Terminate|User-defined signal 2|
+|13|SIGPIPE|Terminate|Write in pipe with no reader|
+|14|SIGALRM|Terminate|Timer signal from alarm function|
+|15|SIGTERM|Terminate|Software termination signal|
+|16|SIGSTKFLT|Terminate|Stack fault on coprocessor|
+|17|SIGCHLD|Ignore|Child process has stopped or terminated|
+|18|SIGCONT|Ignore|Continue process if stopped|
+|19|SIGSTOP|Stop|Stop signal not from terminal|
+|20|SIGTSTP|Stop|Stop signal from terminal(ctrl-z)|
+|21|SIGTTIN|Stop|Background process read from terminal|
+|22|SIGTTOU|Stop|Background process wrote to terminal|
+|23|SIGURG|Ignore|Urgent condition on socket|
+|24|SIGXCPU|Terminate|CPU time limit exceeded|
+|25|SIGXFSZ|Terminate|File size limit exceeded|
+|26|SIGVTALRM|Terminate|Virtual timer expired|
+|27|SIGPROF|Terminate|Profiling timer expired|
+|28|SIGWINCH|Ignore|Window size changed|
+|29|SIGIO|Terminate|I/O now possible on a descriptor|
+|30|SIGPWR|Terminate|Power failure|
+|31|SIGSYS|Terminate|Bad system call|
 
 - Accept argument (ac, **av(fd)) and pass to execve function
     - Error check(ac != 2)
