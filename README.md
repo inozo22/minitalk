@@ -12,13 +12,15 @@
 
 ## Table of contents (Índice)
 1. [Subject](#1-subject)
-    - [1.1. The Instruction](#11-The-Instruction)
-    - [1.2. Obligation part](#12-Obligation-part)
+    - [1.1. Common Instruction](#11-common-instruction)
+    - [1.2. Project instructions](#12-project-instrucions)
+    - [1.3. Mandatory part](#13-mandatory-part)
+    - [1.4. Bonus part](#14-bonus-part)
 2. [Error control](#2-error-control)
 3. [Simple plan](#3-simple-plan)
 
 ## 1. Subject
-### 1.1. The Instruction
+### 1.1. Common Instruction
 - Functions should not finish unexpectedly (segfault, bus error, double free, etc) or have undefined behaviour.
 - All memory allocated on the heap shall be released appropriately when necessary. No memory leaks shall be allowed. 
 - If the statement requires it, you must deliver a Makefile that will compile your source files to the required output with the -Wall, -Werror and -Wextra flags, and of course your Makefile must not relink.
@@ -30,7 +32,7 @@
 
 Who is Deepthought?
 
-## 2. Obligation part
+### 1.2.Project instructions
 - Name your executable files "client" and "server".
 - You have to turn in a Makefile which will compile your source files. It must not relink.
 - You can definitely use your libft.
@@ -55,16 +57,30 @@ Who is Deepthought?
     - exit
 
 Until here
-### Requirements
-Your project must comply with the following rules:
+### 1.3. Mandatory part
+クライアントとサーバーの形で通信プログラムを作成する必要がある。
+- まずサーバーを起動する必要がある。起動後、PIDを出力しなければならない。
+- クライアントは2つのパラメーターを受け取る：
+    - サーバーのPID。
+    - 送信する文字列。
+- クライアントは、パラメータとして渡された文字列をサーバーに送信しなければならない。
+文字列を受信したら、サーバーはそれを印刷しなければならない。
+- サーバーは、かなり速く文字列を表示しなければならない。素早くというのは、もし時間がかかりすぎると思ったら、それは長すぎるということだろう。
+```
+100文字表示で1秒はかかりすぎ！
+```
 
- - You have to turn in a Makefile which will compile your source files. It must not relink.
- - You have to handle errors thoroughly. In no way your program should quit unexpectedly (segmentation fault, bus error, double free, and so on).
- - Your program mustn't have memory leaks.
- - If you have any doubt, handle the errors like the shell command:
- <file1 cmd1 | cmd2> file2
+- サーバーは、再起動する必要なく、複数のクライアントから連続して文字列を受信できなければならない。
+- クライアントとサーバーの間の通信は、UNIXのシグナルのみを使用して行う。
+- 使用できるシグナルは、次の2つのみ： SIGUSR1 と SIGUSR2
 
-No he hecho nada
+```
+Linuxシステムは、このタイプの保留中のシグナルがある場合、シグナルをキューに入れることはない！ボーナスタイム？
+```
+### 1.4. Bonus part
+- サーバーは、受信したすべてのメッセージに対して、クライアントにシグナルを送り返すことで確認します。
+- ユニコード文字に対応！
+
 ## 3. Error control
 - Number of argument is not 2 (ac != 2)
 - Different number of rows or columns
