@@ -55,8 +55,7 @@ Who is Deepthought?
     - sleep
     - usleep
     - exit
-
-Until here
+ 
 ### 1.3. Mandatory part
 クライアントとサーバーの形で通信プログラムを作成する必要がある。
 - まずサーバーを起動する必要がある。起動後、PIDを出力しなければならない。
@@ -89,7 +88,7 @@ Linuxシステムは、このタイプの保留中のシグナルがある場合
 - Numbers are not int(IDK)
 - Shouldn't accept characters
 - (How many numbers of rows or columns I have to accept?)
-- 
+
 
 ## 4. List of signals on linux
 
