@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/22 17:43:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/03/29 08:10:42 by nimai            ###   ########.fr       */
+/*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
+/*   Updated: 2023/04/02 17:54:56 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "../inc/minitalk.h"
 
-# include "../lib/libft/libft.h"
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include <errno.h>
-# include <signal.h>
-# include <sys/types.h>
-//ato de kesu
-#include <stdio.h>
-//comment
+int main(void)
+{
+    ft_putnbr(getpid(), 1);
 
 
 
-
-
-
-
-
-#endif
+    return (0);
+}
