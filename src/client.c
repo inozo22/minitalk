@@ -6,11 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/02 17:33:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/02 16:17:54 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
+//Retention of header files needs to be considered.
 
 
 int	main(int ac, char **av)//accept server PID and str to send as arguments

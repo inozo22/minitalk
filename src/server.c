@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/02 17:54:56 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/02 16:17:03 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int main(void)
 {
-    ft_putnbr(getpid(), 1);
+//output pid//
+    ft_putstr_fd("pid: ", 1);
+    ft_putnbr_fd(getpid(), 1);
+    ft_putchar_fd('\n', 1);
+
+//when it receives the string, it has to print it (as soon as possible as it can)
 
 
+//After the first string, also it has to be able to accept strings without restart
 
     return (0);
 }
