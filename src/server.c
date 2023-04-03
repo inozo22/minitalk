@@ -18,6 +18,7 @@ int main(void)
     ft_putstr_fd("pid: ", 1);
     ft_putnbr_fd(getpid(), 1);
     ft_putchar_fd('\n', 1);
+//keep running this process
 
 //when it receives the string, it has to print it (as soon as possible as it can)
 
