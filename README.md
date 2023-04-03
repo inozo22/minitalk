@@ -160,11 +160,18 @@ sigaddset() は、シグナル・セットを操作する関数のファミリ�
 
 アプリケーションは、sigemptyset() または sigfillset() のどちらかを、sigset_t型のオブジェクトが他に使用される前に、各オブジェクトに対して少なくとも1回は呼び出すべきである。そのようなオブジェクトが、この方法で初期化されていないにもかかわらず、引数として pthread_sigmask()、sigaction()、sigaddset()、sigdelset()、 sigismember()、sigpending()、sigprocmask()、sigsuspend()、sigtimedwait()、sigwait()、または sigwaitinfo() のどれかに指定された場合、その結果は未定義です。
 
+### signal
+signal() の動作は UNIX のバージョンにより異なる。 また、歴史的に見て Linux のバージョンによっても異なっている。 このシステムコールの使用は避け、 代わりに sigaction(2) を使用すること。
+The behaviour of signal() depends on the version of UNIX. It has also historically differed between Linux versions. Avoid using this system call and use sigaction(2) instead.
+
 ### sigaction
 
 sigaction ()システムコールは、特定のシグナルを受信した際の プロセスの動作を変更するのに使用される。
 signum には、SIGKILLとSIGSTOP以外の有効なシグナルをどれでも指定できる。
 actがNULL以外であれば、シグナルsignumの新しい動作 (action)としてactが設定される。oldactがNULLでなければ、今までの動作がoldactに格納される。
+```
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
+```
 
 sigaction 構造体は以下のような感じに定義される。
 
@@ -179,12 +186,63 @@ struct sigaction
 }
 ```
 
+- sa_handler   シグナルハンドラ
+- sa_sigaction　より詳しいシグナル情報を引数に受け取ることのできるシグナルハンドラ．sa_flags に SA_SIGINFO を加えることで sa_handler の代わりに使用できるようになる．
+- sa_mask　シグナルハンドラ起動時に，対応するシグナルの他にマスクしたいシグナル
+- sa_flags　動作の詳細を設定するフラグ
+- sa_restorer　オブソリート（使用してはいけない）
+
 アーキテクチャによっては共用体 (union) が用いられており、その場合には sa_handler と sa_sigaction の両方を同時に割り当てることはできない。
 sa_restorer 要素は廃止予定であり使用すべきではない。 POSIX には sa_restorer 要素に関する規定はない。
 sa_handler は signum に対応する動作を指定するもので、 デフォルトの動作を行う SIG_DFL 、そのシグナルを無視する SIG_IGN 、シグナルハンドラ関数へのポインタが設定できる。 シグナルハンドラ関数の引き数は一つであり、シグナル番号が引き数として渡される。
+
+handlerの定義方法
+```
+void handler(int sig, siginfo_t *info, void *ucontext) 
+{
+    ... 
+}
+```
 sa_flags に SA_SIGINFO が指定された場合、 ( sa_handler ではなく) sa_sigaction により signum に対応するシグナルハンドル関数が指定される。 指定される関数は、最初の引き数としてシグナル番号を、 二番目の引き数として siginfo_t へのポインタを、三番目の引き数として (void * にキャストした) ucontext_t へのポインタを受けとる。
+
+signinfo_t の定義
+```
+siginfo_t {
+    int      si_signo;     /* Signal number */
+    int      si_errno;     /* An errno value */
+    int      si_code;      /* Signal code */
+    int      si_trapno;    /* Trap number that caused hardware-generated signal (unused on most architectures) */
+    pid_t    si_pid;       /* Sending process ID */
+    uid_t    si_uid;       /* Real user ID of sending process */
+    int      si_status;    /* Exit value or signal */
+    clock_t  si_utime;     /* User time consumed */
+    clock_t  si_stime;     /* System time consumed */
+    union    sigval si_value; /* Signal value */
+    int      si_int;       /* POSIX.1b signal */
+    void     *si_ptr;       /* POSIX.1b signal */
+    int      si_overrun;   /* Timer overrun count; POSIX.1b timers */
+    int      si_timerid;   /* Timer ID; POSIX.1b timers */
+    void     *si_addr;      /* Memory location which caused fault */
+    long     si_band;      /* Band event (was int in glibc 2.3.2 and earlier) */
+    int      si_fd;        /* File descriptor */
+    short    si_addr_lsb;  /* Least significant bit of address (since Linux 2.6.32) */
+    void     *si_lower;     /* Lower bound when address violation occurred (since Linux 3.19) */
+    void     *si_upper;     /* Upper bound when address violation occurred (since Linux 3.19) */
+    int      si_pkey;      /* Protection key on PTE that caused fault (since Linux 4.6) */
+    void     *si_call_addr; /* Address of system call instruction (since Linux 3.5) */
+    int      si_syscall;   /* Number of attempted system call (since Linux 3.5) */
+    unsigned int si_arch;  /* Architecture of attempted system call (since Linux 3.5) */ 
+}
+```
+
 sa_mask は、シグナル・ハンドラ実行中に禁止 (block) するシグナルのマスクを表す。 さらに、 SA_NODEFER フラグが指定されていない場合は、ハンドラを起動するきっかけとなる シグナルにも sa_mask が適用される。
+
+```
+
+```
 sa_flags はシグナル・ハンドラの動作を変更するためのフラグの集合を指定する。 sa_flags には、以下に示すフラグの (0個以上の) 論理和をとったものを指定する。
+
+
 
 ### kill
 
@@ -203,3 +261,21 @@ int kill(pid_t pid， int sig);
 ０を指定した場合は、呼び出し元プロセスのプロセス・グループに属する全てのプロセスにシグナルを送る。
 -1を指定した場合は、呼び出し元プロセスがシグナルを送る許可を持つ全てのプロセスにシグナルを送る。但し、プロセス番号１（initプロセス）には送らない。
 -1より小さな値を指定した場合は、pidの絶対値のプロセス・グループに属する全てのプロセスにシグナルを送る。
+
+### usleep
+```
+int usleep(useconds_t useconds);
+```
+usleep() 関数は、useconds 引数によって指定された マイクロ秒数間、スレッドの実行を中断する。他のアクティビティー のため、または呼び出しの処理に費やされる時間のために、実際の中断時間は指定された時間量より長くなることがある。
+
+useconds 引数は 1,000,000 未満でなければならない。useconds の値が 0 の場合には、呼び出しは 無効。
+
+usleep() 関数は、リアルタイム・インターバル・タイマーの 直前の設定値に干渉しない。スレッドが usleep() を呼び出す前にこのタイマーを設定し 、usecondsによって指定された時間がインターバル・タイマーの前の設定値と等しいか それを超える場合には、スレッドは前に設定されたタイマー・インターバルが満了したときに活動化される。
+
+### pause
+```
+int pause(void);
+```
+呼び出しスレッドの実行を中断する。シグナル・ハンドラーを実行するか、スレッドを終了するシグナルが送達されるまで、スレッドは実行を再開しない。プロセスのthreadによって一部のシグナルをブロックできる。詳細は、sigprocmask() - スレッドの検査または変更を参照。
+
+着信ブロック解除シグナルでスレッドが終了すると、pause() は 二度と呼び出し元へは戻りません。着信シグナルがシグナル・ハンドラーによって処理される場合、pause() はシグナル・ハンドラーが戻ってから戻る。
