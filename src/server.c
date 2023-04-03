@@ -25,7 +25,8 @@ int main(void)
 //keep running this process
     sigemptyset(&sa.sa_mask);
     sa.sa_handler = signal_handler;
-    sa.sa_flag = 0;
+    sa.sa_flag = SA_SIGINFO;//to pass pid, uid and info in siginfo_t
+    //if doesn't use this above, only I can pass is signal number 
     while (1)
         pause (0);
 //when it receives the string, it has to print it (as soon as possible as it can)

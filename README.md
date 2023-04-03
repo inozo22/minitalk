@@ -196,6 +196,12 @@ struct sigaction
 sa_restorer 要素は廃止予定であり使用すべきではない。 POSIX には sa_restorer 要素に関する規定はない。
 sa_handler は signum に対応する動作を指定するもので、 デフォルトの動作を行う SIG_DFL 、そのシグナルを無視する SIG_IGN 、シグナルハンドラ関数へのポインタが設定できる。 シグナルハンドラ関数の引き数は一つであり、シグナル番号が引き数として渡される。
 
+- sigset_t
+シグナルセットは、複数のシグナルをまとめて表現するもの。どのシグナルが選択されているかを表すだけなので、Linux では以下のような整数型で実装されており、各ビットの位置がシグナル番号に対応する。
+```
+typedef unsigned long sigset_t;
+```
+
 handlerの定義方法
 ```
 void handler(int sig, siginfo_t *info, void *ucontext) 
