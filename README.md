@@ -146,3 +146,42 @@ Linuxシステムは、このタイプの保留中のシグナルがある場合
 ### pid_t
 pids[] は、プロセス識別子を保持するための配列。いくつかの種類が あるが、getpid(),getppid(),fork() に関連しているものは、0 番目 の pids[PIDTYPE_PID]。
 pids[PIDTYPE_PID] は、pid_link 型で、内部にstruct pid を持つ。struct pid の中には、struct upid があり、その中には getpid() 等で用いる pid を 保持するフィールド nr がある。
+
+### sigemptyset
+シグナル・セット set を、空集合に初期設定する。認識されたシグナルはすべて除外される。
+
+sigemptyset() は、シグナル・セットを操作する関数のファミリーの一部。 シグナル・セットとは、シグナル・グループを1つのプロセスにより経過の記録を取るためのデータ・オブジェクト。例えば、プロセスにより、ブロック化しているシグナルを記録する1つのシグナル・セット、および保留中のシグナルを記録する別のシグナル・セットを作成できる。シグナル・セットは、その他の関数 (sigprocmask() など)で使用されるシグナルのグループを操作するか、またはその他の関数 (sigpending() など) で戻されるシグナル・セットを検査する ために使用される。
+
+### sigaddset
+
+既にsetに記録済みのシグナルのセットに、シグナルを追加する。
+
+sigaddset() は、シグナル・セットを操作する関数のファミリーの一部。シグナル・セットとは、シグナル・グループを1つのプロセスにより経過の記録を取るためのデータ・オブジェクト。例えば、プロセスにより、ブロック化しているシグナルを記録する1つのシグナル・セット、および保留中のシグナルを記録する別のシグナル・セットを作成できる。通常、シグナル・セットは、その他の関数 (sigprocmask() など)で使用されるシグナルのグループを操作するか、またはその他の関数(sigpending() など)で戻されるシグナル・セットを検査するために使用される。
+
+アプリケーションは、sigemptyset() または sigfillset() のどちらかを、sigset_t型のオブジェクトが他に使用される前に、各オブジェクトに対して少なくとも1回は呼び出すべきである。そのようなオブジェクトが、この方法で初期化されていないにもかかわらず、引数として pthread_sigmask()、sigaction()、sigaddset()、sigdelset()、 sigismember()、sigpending()、sigprocmask()、sigsuspend()、sigtimedwait()、sigwait()、または sigwaitinfo() のどれかに指定された場合、その結果は未定義です。
+
+### sigaction
+
+sigaction ()システムコールは、特定のシグナルを受信した際の プロセスの動作を変更するのに使用される。
+signum には、SIGKILLとSIGSTOP以外の有効なシグナルをどれでも指定できる。
+actがNULL以外であれば、シグナルsignumの新しい動作 (action)としてactが設定される。oldactがNULLでなければ、今までの動作がoldactに格納される。
+
+sigaction 構造体は以下のような感じに定義される。
+
+```
+struct sigaction 
+{
+    void (*sa_handler)(int);
+    void (*sa_sigaction)(int, siginfo_t *, void *);
+    sigset_t sa_mask;
+    int sa_flags;
+    void (*sa_restorer)(void);
+}
+```
+
+アーキテクチャによっては共用体 (union) が用いられており、その場合には sa_handler と sa_sigaction の両方を同時に割り当てることはできない。
+sa_restorer 要素は廃止予定であり使用すべきではない。 POSIX には sa_restorer 要素に関する規定はない。
+sa_handler は signum に対応する動作を指定するもので、 デフォルトの動作を行う SIG_DFL 、そのシグナルを無視する SIG_IGN 、シグナルハンドラ関数へのポインタが設定できる。 シグナルハンドラ関数の引き数は一つであり、シグナル番号が引き数として渡される。
+sa_flags に SA_SIGINFO が指定された場合、 ( sa_handler ではなく) sa_sigaction により signum に対応するシグナルハンドル関数が指定される。 指定される関数は、最初の引き数としてシグナル番号を、 二番目の引き数として siginfo_t へのポインタを、三番目の引き数として (void * にキャストした) ucontext_t へのポインタを受けとる。
+sa_mask は、シグナル・ハンドラ実行中に禁止 (block) するシグナルのマスクを表す。 さらに、 SA_NODEFER フラグが指定されていない場合は、ハンドラを起動するきっかけとなる シグナルにも sa_mask が適用される。
+sa_flags はシグナル・ハンドラの動作を変更するためのフラグの集合を指定する。 sa_flags には、以下に示すフラグの (0個以上の) 論理和をとったものを指定する。
