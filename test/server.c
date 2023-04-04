@@ -14,7 +14,26 @@
 
 static void	server_action(int sig, siginfo_t *info, void *context)
 {
+	static unsigned char	buf[BUFFER_SIZE];
+	static int				index;
+	static int				i;
+	static unsigned char 	uc;
 
+	(void)context;
+	if (sig == SIGUSR2)
+		uc |= (1 << i);
+	i++;
+	if (i == 8)
+	{
+		if (index > BUFFER_SIZE - 1)
+			;
+		if (uc == 0)
+			index = ;
+		else
+			buf[index++] = uc;
+		i = 0;
+		uc = 0;
+	}
 }
 
 void   receiver(void action(int, siginfo_t *, void *))
