@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/02 16:17:03 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/04 07:50:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int main(void)
 {
-    pid_t   pid;
     struct sigaction    sa;
+    pid_t   pid;
+
 
 //output pid//
     ft_putstr_fd("pid: ", 1);
@@ -28,7 +29,7 @@ int main(void)
     sa.sa_flag = SA_SIGINFO;//to pass pid, uid and info in siginfo_t
     //if doesn't use this above, only I can pass is signal number 
     while (1)
-        pause (0);
+        pause ();
 //when it receives the string, it has to print it (as soon as possible as it can)
 
 
