@@ -13,6 +13,8 @@
 #include "../inc/minitalk.h"
 //Retention of header files needs to be considered.
 
+
+
 int	main(int ac, char **av)//accept server PID and str to send as arguments
 {
 	//somosomo, after execute the server, I execute client by my self?
