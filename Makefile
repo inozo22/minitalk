@@ -6,68 +6,39 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/03/28 15:16:02 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/05 13:17:14 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET1		:= server
-TARGET2		:= client
+SERVER	:= server
+CLIENT	:= client
+CC		:= gcc
+FLAGS	:= -Wall -Werror -Wextra
+LIBS	:= -L./libft -lft
+LIBFT	:= libft.a
 
-SRCDIR		:= ./src/
-SRC			:=  \
-				main.c \
-				error_control.c \
-				read_file.c
+SRCDIR	:= ./src/
 
+all : $(LIBFT) $(SERVER) $(CLIENT)
 
-				
-OBJDIR		:= ./obj/
-OBJ			:= $(addprefix $(OBJDIR), $(SRC:.c=.o))
-INC			:= /usr/include
-INCLIB		:= $(INC)/../lib
-LIBDIR		:= ./lib/
-LIBFT		:= $(LIBDIR)libft
-INCDIR		:= ./inc/
+$(LIBFT) : 
+	@make -C ./libft/
 
-#SANITFLAG	:= -fsanitize=address
-CC			:= gcc
-CFLAGS		:= -g3 -Wall -Wextra -Werror
+$(SERVER) : $(SRCDIR)$(SERVER).o inc/minitalk.h
+	@$(CC) $(SRCDIR)$(SERVER).o $(LIBS) -o $@
 
-RM_COL		:= \033[0m
-RED		    := \033[1;31m
-GREEN		:= \033[1;32m
-YELLOW		:= \033[1;33m
-BLUE		:= \033[1;34m
-CYAN 		:= \033[1;36m
+$(CLIENT) : $(SRCDIR)$(CLIENT).o inc/minitalk.h
+	@$(CC) $(SRCDIR)$(CLIENT).o $(LIBS) -o $@
 
-all: $(TARGET1) $(TARGET2) 
+%.o : $(SRCDIR)%.c
+	@$(CC) $(FLAGS) $< -c -I inc
 
-$(OBJDIR):
-	@mkdir -p $@
-
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@make -C $(LIBFT)
-	@$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@ 
-
-$(NAME): $(OBJ)
-	@echo "$(BLUE)--Compiling ${RM_COL} ${YELLOW}$(NAME) ${RM_COL}..."
-	@make -sC $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT)/libft.a -o $(NAME)
-	@echo "$(GREEN)$(NAME) created[0m ✔️"
-
-clean:
-	@make -C $(LIBFT) clean
-	@rm -rf $(OBJDIR)
-	@echo "$(RED)Deleted $(YELLOW)$(NAME) $(RM_COL)objs ✔️"
+clean :
+	@make clean -C libft
+	@rm -f *.o
 
 fclean: clean
-	@make -C $(LIBFT) fclean
-	@rm -rf ./server.dSYM
-	@rm -rf ./client.dSYM
-	@rm -f $(TARGET1)
-	@rm -f $(TARGET2)
-	@echo "$(RED)Deleted $(YELLOW)$(NAME) $(RM_COL)binary ✔️"
-re:
-	@make fclean all
+	@make fclean -C libft
+	@rm -f $(SERVER) $(CLIENT)
 
-.PHONY: all clean fclean re
+re: fclean all

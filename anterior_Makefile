@@ -1,0 +1,89 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    anterior_Makefile                                  :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
+#    Updated: 2023/04/05 13:10:37 by nimai            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME		:= minitalk
+SERVER		:= server
+CLIENT		:= client
+
+SRCDIR		:= ./src/
+SRC			:=  \
+				main.c \
+				error_control.c \
+				read_file.c
+				
+OBJDIR		:= ./obj/
+OBJ			:= $(addprefix $(OBJDIR), $(SRC:.c=.o))
+#INC			:= /usr/include
+#INCLIB		:= $(INC)/../lib
+LIBDIR		:= ./libft/
+LIBFT		:= libft
+INCDIR		:= ./inc/
+BINDIR		:= ./bin/
+
+#SANITFLAG	:= -fsanitize=address
+CC			:= gcc
+CFLAGS		:= -Wall -Wextra -Werror
+
+RM_COL		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
+
+all: $(NAME)
+
+$(NAME): $(OBJDIR) $(LIBFT) $(SERVER) $(CLIENT) 
+
+$(OBJDIR):
+	@mkdir -p $@
+
+$(LIBFT):
+	@mkdir -C $(LIBDIR)libft
+
+$(BINDIR):
+	@mkdir -p $@
+
+$(SERVER): $(OBJDIR)$(SERVER).o $(INCDIR)minitalk.h
+	@$(CC) $(CFLAGS) $(OBJDIR)$(SERVER).o -L$(LIBDIR) -lft -o $@
+
+$(CLIENT):$(OBJDIR)$(CLIENT).o $(INCDIR)minitalk.h
+	@$(CC) $(CFLAGS) $(OBJDIR)$(CLIENT).o -L$(LIBDIR) -lft -o $@
+
+%.o	: %.c
+	@$(CC) $(CFLAGS) $< -c -I./inc
+
+#$(OBJDIR)%.o: $(SRCDIR)%.c
+#	@make -C $(LIBFT)
+#	@$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@ 
+
+#$(NAME): $(OBJ)
+#	@echo "$(BLUE)--Compiling ${RM_COL} ${YELLOW}$(NAME) ${RM_COL}..."
+#	@make -sC $(LIBFT)
+#	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT)/libft.a -o $(NAME)
+#	@echo "$(GREEN)$(NAME) created[0m ✔️"
+
+clean:
+	@make -C $(LIBFT) clean
+	@rm -rf $(OBJDIR)
+	@echo "$(RED)Deleted $(YELLOW)$(NAME) $(RM_COL)objs ✔️"
+
+fclean: clean
+	@make -C $(LIBFT) fclean
+	@rm -rf *.dSYM
+	@rm -f $(SERVER)
+	@rm -f $(CLIENT)
+	@echo "$(RED)Deleted $(YELLOW)$(NAME) $(RM_COL)binary ✔️"
+re:
+	@make fclean all
+
+.PHONY: all clean fclean re
