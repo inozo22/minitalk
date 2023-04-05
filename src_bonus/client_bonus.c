@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/05 15:32:37 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 16:15:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ void	receiver(void action(int, siginfo_t *, void *))
 int	main(int ac, char **av)//accept server PID and str to send as arguments
 {
 	pid_t	srv_pid;
+	//kokokara kesu
+	pid_t	c_pid;
+
+
+	c_pid = getpid();
+	printf("c_pid: %d\n", c_pid);
+	//
 
 	if (ac != 3)
 		return (0);

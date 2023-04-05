@@ -6,18 +6,19 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/05 15:27:41 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 16:25:07 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-static int	sent_str(unsigned char *buf, int index, siginfo_t *info)
+static int	put_str(unsigned char *buf, int index, siginfo_t *info)
 {
 	printf("Line: %d, index: %d\n", __LINE__, index);
 	ft_putendl_fd((char *)buf, 1);
 	ft_bzero(buf, index);
 	kill(info->si_pid, SIGUSR2);
+	printf("Line: %d, info->si_pid: %d\n", __LINE__, info->si_pid);
 	return (0);
 }
 
@@ -37,7 +38,7 @@ static void	server_action(int sig, siginfo_t *info, void *context)
 		if (index > BUF_SIZE - 1)
 			_exit (0);
 		if (uc == 0)
-			index = sent_str(buf, index, info);
+			index = put_str(buf, index, info);
 		else
 			buf[index++] = uc;
 		i = 0;
