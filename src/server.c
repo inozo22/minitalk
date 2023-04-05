@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 15:27:41 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	server_action(int sig, siginfo_t *info, void *context)
 	if (i == 8)
 	{
 		if (index > BUF_SIZE - 1)
-			printf("server: buffer overflow.\n");
+			_exit (0);
 		if (uc == 0)
 			index = sent_str(buf, index, info);
 		else
@@ -45,9 +45,9 @@ static void	server_action(int sig, siginfo_t *info, void *context)
 	}
 }
 
-void   receiver(void action(int, siginfo_t *, void *))
+void	receiver(void action(int, siginfo_t *, void *))
 {
-	struct sigaction    sa;
+	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_sigaction = &server_action;
@@ -57,16 +57,16 @@ void   receiver(void action(int, siginfo_t *, void *))
 	sigaction(SIGUSR2, &sa, NULL);
 }
 
-int main(void)
+int	main(void)
 {
-    pid_t   pid;
+	pid_t	pid;
 
-    ft_putstr_fd("pid: ", 1);
-    pid = getpid();
-    ft_putnbr_fd(pid, 1);
-    ft_putchar_fd('\n', 1);
-    receiver(server_action);
-    while (1)
-        pause ();
-    return (0);
+	ft_putstr_fd("pid: ", 1);
+	pid = getpid();
+	ft_putnbr_fd(pid, 1);
+	ft_putchar_fd('\n', 1);
+	receiver(server_action);
+	while (1)
+		pause ();
+	return (0);
 }

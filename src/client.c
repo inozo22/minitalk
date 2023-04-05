@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:23 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 15:32:37 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static void	send_char(pid_t srv_pid, char c)
 		usleep(50);
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
-			exit (0);//
+			_exit (0);
 	}
 }
 
 static void	send_str(pid_t srv_pid, char *str)
 {
 	if (ft_strlen(str) > BUF_SIZE - 1)
-		exit (0);//
+		_exit (0);
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
@@ -47,13 +47,13 @@ static void	client_action(int sig, siginfo_t *info, void *context)
 	(void)context;
 	(void)info;
 	if (sig == SIGUSR2)
-		exit (0);//
-	exit(0);//
+		ft_putendl_fd("Successfull", 1);
+	_exit (0);
 }
 
-void   receiver(void action(int, siginfo_t *, void *))
+void	receiver(void action(int, siginfo_t *, void *))
 {
-	struct sigaction    sa;
+	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_sigaction = &client_action;
@@ -67,10 +67,12 @@ int	main(int ac, char **av)//accept server PID and str to send as arguments
 {
 	pid_t	srv_pid;
 
-	if (ac != 3 || !ft_strlen(av[2]))//I think PID it's necessary?
+	if (ac != 3)
 		return (0);
 	errno = 0;
 	srv_pid = (pid_t)ft_atoi(av[1]);
+	if (errno != 0 || srv_pid < 1)
+		_exit (0);
 	receiver(client_action);
 	send_str(srv_pid, av[2]);
 	return (0);
