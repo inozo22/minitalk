@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/05 13:17:14 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/05 14:00:26 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(CLIENT) : $(SRCDIR)$(CLIENT).o inc/minitalk.h
 
 clean :
 	@make clean -C libft
-	@rm -f *.o
+	@rm -f $(SRCDIR)*.o
 
 fclean: clean
 	@make fclean -C libft

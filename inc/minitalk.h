@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:43:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/02 16:08:04 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 14:38:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <signal.h>
 # include <sys/types.h>
 //ato de kesu
-#include <stdio.h>
+# include <stdio.h>
 //comment
 
+# define BUF_SIZE 10001
 
 #endif

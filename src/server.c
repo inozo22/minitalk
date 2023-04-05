@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/04 15:51:51 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 14:38:24 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 static int	sent_str(unsigned char *buf, int index, siginfo_t *info)
 {
+	printf("Line: %d, index: %d\n", __LINE__, index);
 	ft_putendl_fd((char *)buf, 1);
 	ft_bzero(buf, index);
 	kill(info->si_pid, SIGUSR2);
-	return (0);	
+	return (0);
 }
 
 static void	server_action(int sig, siginfo_t *info, void *context)
 {
-	static unsigned char	buf[BUFFER_SIZE];
+	static unsigned char	buf[BUF_SIZE];
 	static int				index;
 	static int				i;
-	static unsigned char 	uc;
+	static unsigned char	uc;
 
 	(void)context;
 	if (sig == SIGUSR2)
@@ -33,8 +34,8 @@ static void	server_action(int sig, siginfo_t *info, void *context)
 	i++;
 	if (i == 8)
 	{
-		if (index > BUFFER_SIZE - 1)
-			;
+		if (index > BUF_SIZE - 1)
+			printf("server: buffer overflow.\n");
 		if (uc == 0)
 			index = sent_str(buf, index, info);
 		else

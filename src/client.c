@@ -6,14 +6,14 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/04 15:52:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/05 14:38:23 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 //Retention of header files needs to be considered.
 
-void	send_char(pid_t srv_pid, char c)
+static void	send_char(pid_t srv_pid, char c)
 {
 	int				bit;
 	int				i;
@@ -33,7 +33,7 @@ void	send_char(pid_t srv_pid, char c)
 
 static void	send_str(pid_t srv_pid, char *str)
 {
-	if (ft_strlen(str) > BUFFER_SIZE - 1)
+	if (ft_strlen(str) > BUF_SIZE - 1)
 		exit (0);//
 	while (*str)
 	{
