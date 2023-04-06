@@ -6,14 +6,16 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/06 11:51:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/06 13:36:43 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 //Retention of header files needs to be considered.
 
-static void	send_char(pid_t srv_pid, char c)
+sig_atomic_t	volatile	flag;
+
+void	send_char(pid_t srv_pid, char c)
 {
 	int				bit;
 	int				i;
@@ -24,31 +26,44 @@ static void	send_char(pid_t srv_pid, char c)
 	while (++i < 8)
 	{
 //youcheck
-		usleep(50);
-		bit = (uc >> i) & 0x01;
+//		usleep(50);
+		flag = 0;
+		if (uc & 1)
+			kill(srv_pid, SIGUSR1);
+		else
+			kill(srv_pid, SIGUSR2);
+		i++;
+		uc = uc >> 1;
+		while (!flag)
+			pause();
+/* 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
-			_exit (0);
+			_exit (0); */
 	}
+	flag = 0;
 }
 
-static void	send_str(pid_t srv_pid, char *str)
+void	send_str(pid_t srv_pid, char *str)
 {
 /* 	if (ft_strlen(str) > BUF_SIZE - 1)
 		_exit (0); */
 	while (*str)
 	{
-		send_char(srv_pid, *str++);
+		send_char(srv_pid, *str);
+		str++;
 	}
 	send_char(srv_pid, '\0');
 }
 
-static void	client_action(int sig, siginfo_t *info, void *context)
+void	client_action(int sig, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;
+	if (sig == SIGUSR1)
+		flag = 1;
 	if (sig == SIGUSR2)
 		ft_putendl_fd("Successfull\n", 1);
-	_exit (0);
+//	_exit (0);
 }
 
 void	receiver(void action(int, siginfo_t *, void *))
@@ -59,8 +74,10 @@ void	receiver(void action(int, siginfo_t *, void *))
 	sa.sa_sigaction = &client_action;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
+	sigaddset(&sa.sa_mask, SIGUSR1);
+//	sigaddset(&sa.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+//	sigaction(SIGUSR2, &sa, NULL);
 }
 
 int	main(int ac, char **av)//accept server PID and str to send as arguments
@@ -82,5 +99,5 @@ int	main(int ac, char **av)//accept server PID and str to send as arguments
 		return (0);
 	receiver(client_action);
 	send_str(srv_pid, av[2]);
-	return (0);
+//	return (0);
 }
