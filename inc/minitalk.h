@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:43:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/05 14:38:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/06 11:47:14 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@
 # include <stdio.h>
 //comment
 
-# define BUF_SIZE 10001
+# define BUF_SIZE 100001
 
 #endif
