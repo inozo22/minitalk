@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/07 16:38:17 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/07 17:00:21 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	receiver(void action(int, siginfo_t *, void *))
 	sigaction(SIGUSR2, &sa, NULL);
 }
 
-int	main(int ac, char **av)//accept server PID and str to send as arguments
+int	main(int ac, char **av)
 {
 	pid_t	srv_pid;
 
