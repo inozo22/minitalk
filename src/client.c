@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/06 11:51:47 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/07 16:38:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	send_char(pid_t srv_pid, char c)
 	i = -1;
 	while (++i < 8)
 	{
-//youcheck
 		usleep(50);
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
@@ -33,8 +32,6 @@ static void	send_char(pid_t srv_pid, char c)
 
 static void	send_str(pid_t srv_pid, char *str)
 {
-/* 	if (ft_strlen(str) > BUF_SIZE - 1)
-		_exit (0); */
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
@@ -66,13 +63,6 @@ void	receiver(void action(int, siginfo_t *, void *))
 int	main(int ac, char **av)//accept server PID and str to send as arguments
 {
 	pid_t	srv_pid;
-	//kokokara kesu
-	pid_t	c_pid;
-
-
-	c_pid = getpid();
-	printf("c_pid: %d\n", c_pid);
-	//
 
 	if (ac != 3)
 		return (0);
