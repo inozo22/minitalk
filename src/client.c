@@ -6,14 +6,13 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/11 11:45:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/11 15:22:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
-//Retention of header files needs to be considered.
 
-static void	send_char(pid_t srv_pid, char c)
+void	send_char(pid_t srv_pid, char c)
 {
 	int				bit;
 	int				i;
@@ -23,14 +22,14 @@ static void	send_char(pid_t srv_pid, char c)
 	i = -1;
 	while (++i < 8)
 	{
-		usleep(60);
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 			_exit (0);
+		usleep(100);
 	}
 }
 
-static void	send_str(pid_t srv_pid, char *str)
+void	send_str(pid_t srv_pid, char *str)
 {
 	while (*str)
 	{
@@ -39,7 +38,7 @@ static void	send_str(pid_t srv_pid, char *str)
 	send_char(srv_pid, '\0');
 }
 
-static void	client_action(int sig, siginfo_t *info, void *context)
+void	client_action(int sig, siginfo_t *info, void *context)
 {
 	(void)context;
 	(void)info;

@@ -6,21 +6,13 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/11 11:36:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/11 13:39:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
-/* 
-static int	put_str(unsigned char *buf, int index, siginfo_t *info)
-{
-	ft_putendl_fd((char *)buf, 1);
-	ft_bzero(buf, index);
-	kill(info->si_pid, SIGUSR2);
-	return (0);
-} */
 
-static void	server_action(int sig, siginfo_t *info, void *context)
+void	server_action(int sig, siginfo_t *info, void *context)
 {
 	static int				i;
 	static unsigned char	uc;
