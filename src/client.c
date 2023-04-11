@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/07 17:00:21 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/11 11:38:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	send_char(pid_t srv_pid, char c)
 	i = -1;
 	while (++i < 8)
 	{
-		usleep(50);
+		usleep(60);
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 			_exit (0);
