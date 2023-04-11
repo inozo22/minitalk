@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/11 11:38:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/11 11:45:02 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	client_action(int sig, siginfo_t *info, void *context)
 	(void)context;
 	(void)info;
 	if (sig == SIGUSR2)
-		ft_putendl_fd("Successfull\n", 1);
+		ft_putendl_fd("Success\n", 1);
 	_exit (0);
 }
 
