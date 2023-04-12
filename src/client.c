@@ -6,11 +6,12 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/11 15:22:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/12 17:39:50 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
+#include <time.h>
 
 void	send_char(pid_t srv_pid, char c)
 {
@@ -24,17 +25,26 @@ void	send_char(pid_t srv_pid, char c)
 	{
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
+		{
+			printf("Holaaaaaa\n");//donde estas
 			_exit (0);
+		}
 		usleep(100);
 	}
 }
 
 void	send_str(pid_t srv_pid, char *str)
 {
+	struct timespec begin;
+	timespec_get(&begin, TIME_UTC);
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
 	}
+	struct timespec end;
+	timespec_get(&end, TIME_UTC);
+	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
+	printf("Time it took to execute: %lf\n", time_spent);
 	send_char(srv_pid, '\0');
 }
 
