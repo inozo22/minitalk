@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/18 19:03:51 by nimai             #+#    #+#              #
-#    Updated: 2023/02/20 12:26:41 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/13 16:41:41 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(OBJDIR):
 	@mkdir -p $@
 
 $(OBJDIR)%.o : $(SRCDIR)%.c
-	@make -C $(PRINTF)
+#	@make -C $(PRINTF)
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 $(NAME): $(OBJ)
@@ -64,7 +64,7 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@make fclean -C $(PRINTF)
+#	@make fclean -C $(PRINTF)
 	@rm -f $(NAME)
 
 re: fclean all

@@ -6,55 +6,101 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/05 16:47:21 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/13 17:26:46 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER			:= server
-CLIENT			:= client
-SERVER_BONUS	:= server_bonus
-CLIENT_BONUS	:= client_bonus
-CC				:= gcc
-FLAGS			:= -Wall -Werror -Wextra
-LIBS			:= -L./libft -lft
-LIBFT			:= libft.a
+NAME_SERVER		:= server
+NAME_CLIENT		:= client
 
-SRCDIR			:= ./src/
-SRC_BONUSDIR	:= ./src_bonus/
+#------------------------------------------------#
+#   INGREDIENTS                                  #
+#------------------------------------------------#
+# LIBS        libraries to be used
+# LIBS_TARGET libraries to be built
+## INCS        header file locations
+## SRC_DIR     source directory
+# SRCS        source files
+## BUILD_DIR   build directory
+# OBJS        object files
+# DEPS        dependency files
+## CC          compiler
+# CFLAGS      compiler flags
+# CPPFLAGS    preprocessor flags
+# LDFLAGS     linker flags
+# LDLIBS      libraries name
 
-all : $(LIBFT) $(SERVER) $(CLIENT) bonus
+LIBS        := arom base m
+LIBS_TARGET :=            \
+    lib/libarom/libarom.a \
+    lib/libbase/libbase.a
 
-bonus : $(SERVER_BONUS) $(CLIENT_BONUS)
+INCS        := include    \
+    lib/libarom/include   \
+    lib/libbase/include
 
-$(LIBFT) : 
-	@make -C ./libft/
+SRC_DIR     := src
+SRCS        := main.c
+SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 
-$(SERVER) : $(SRCDIR)$(SERVER).o inc/minitalk.h
-	@$(CC) $(SRCDIR)$(SERVER).o $(LIBS) -o $@
+BUILD_DIR   := .build
+OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+DEPS        := $(OBJS:.o=.d)
 
-$(CLIENT) : $(SRCDIR)$(CLIENT).o inc/minitalk.h
-	@$(CC) $(SRCDIR)$(CLIENT).o $(LIBS) -o $@
+CC          := clang
+CFLAGS      := -Wall -Wextra -Werror
+CPPFLAGS    := $(addprefix -I,$(INCS)) -MMD -MP
+LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
+LDLIBS      := $(addprefix -l,$(LIBS))
 
-$(SERVER_BONUS) : $(SRC_BONUSDIR)$(SERVER_BONUS).o inc/minitalk.h
-	@$(CC) $(SRC_BONUSDIR)$(SERVER_BONUS).o $(LIBS) -o $@
+#------------------------------------------------#
+#   UTENSILS                                     #
+#------------------------------------------------#
+# RM        force remove
+# MAKEFLAGS make flags
+# DIR_DUP   duplicate directory tree
 
-$(CLIENT_BONUS) : $(SRC_BONUSDIR)$(CLIENT_BONUS).o inc/minitalk.h
-	@$(CC) $(SRC_BONUSDIR)$(CLIENT_BONUS).o $(LIBS) -o $@
+RM          := rm -f
+MAKEFLAGS   += --silent --no-print-directory
+DIR_DUP     = mkdir -p $(@D)
 
-%.o : $(SRCDIR)%.c
-	@$(CC) $(FLAGS) $< -c -I inc
+#------------------------------------------------#
+#   RECIPES                                      #
+#------------------------------------------------#
+# all       default goal
+# $(NAME)   link .o -> archive
+# $(LIBS)   build libraries
+# %.o       compilation .c -> .o
+# clean     remove .o
+# fclean    remove .o + binary
+# re        remake default goal
+# run       run the program
+# info      print the default goal recipe
 
-%.o : $(SRC_BONUSDIR)%.c
-	@$(CC) $(FLAGS) $< -c -I inc
+all: $(NAME)
 
-clean :
-	@make clean -C libft
-	@rm -f $(SRCDIR)*.o
-	@rm -f $(SRC_BONUSDIR)*.o
+$(NAME): $(OBJS) $(LIBS_TARGET)
+    $(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
+    $(info CREATED $(NAME))
+
+$(LIBS_TARGET):
+    $(MAKE) -C $(@D)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+    $(DIR_DUP)
+    $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+    $(info CREATED $@)
+
+-include $(DEPS)
+
+clean:
+    for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f clean; done
+    $(RM) $(OBJS) $(DEPS)
 
 fclean: clean
-	@make fclean -C libft
-	@rm -f $(SERVER) $(CLIENT)
-	@rm -f $(SERVER_BONUS) $(CLIENT_BONUS)
+    for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
+    $(RM) $(NAME)
 
-re: fclean all
+re:
+    $(MAKE) fclean
+    $(MAKE) all
