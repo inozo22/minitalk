@@ -6,13 +6,13 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/14 14:49:18 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/14 17:34:50 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #NAME			:= pancakes
-NAME_SERVER		:= server
-NAME_CLIENT		:= client
+NAME_SER		:= server
+NAME_CLI		:= client
 #------------------------------------------------#
 #   INGREDIENTS                                  #
 #------------------------------------------------#
@@ -30,11 +30,15 @@ NAME_CLIENT		:= client
 # LDFLAGS     linker flags
 # LDLIBS      libraries name
 
-LIBS			:= libft
-LIBS_TARGET		:= libft/libft.a
+LIBS			:= lib/libft lib/printf
+LIBS_TARGET		:= \
+					lib/libft/libft.a \
+					lib/printf/libftprintf.a
+
 INCS			:= \
 					inc \
-					libft/inc
+					lib/libft/inc \
+					lib/printf/inc
 
 SRC_DIR			:= src
 SRCS_SER		:= server.c
@@ -48,12 +52,15 @@ OBJS_CLI		:= $(SRCS_CLI:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS_SER		:= $(OBJS_SER:.o=.d)
 DEPS_CLI		:= $(OBJS_CLI:.o=.d)
 
-CC				:= gcc
+CC				:= cc
 CFLAGS			:= -Wall -Wextra -Werror
-#CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
-#LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
-#LDLIBS			:= $(addprefix -l,$(LIBS))
-
+CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
+LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
+LDLIBS			:= $(addprefix -l,$(LIBS))
+#ライブラリを使ってビルドするには、3つのフラグが必要:
+#Iはコンパイラにlibヘッダファイルの場所を指示
+#Lはリンカにライブラリの場所を指示
+#lはこのライブラリの名前（従来のlibプレフィックスを除いたもの）
 #------------------------------------------------#
 #   UTENSILS                                     #
 #------------------------------------------------#
@@ -78,11 +85,15 @@ DIR_DUP			= mkdir -p $(@D)
 # run       run the program
 # info      print the default goal recipe
 
-all: $(NAME)
+all: $(NAME_CLI) $(NAME_SER)
 
-$(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $(NAME)
-	$(info CREATED $(NAME))
+$(NAME_CLI): $(OBJS_CLI) $(LIBS_TARGET)
+	$(CC) $(LDFLAGS) $(OBJS_CLI) $(LDLIBS) -o $(NAME_CLI)
+	$(info CREATED $(NAME_CLI))
+
+$(NAME_SER): $(OBJS_SER) $(LIBS_TARGET)
+	$(CC) $(LDFLAGS) $(OBJS_SER) $(LDLIBS) -o $(NAME_SER)
+	$(info CREATED $(NAME_SER))
 
 $(LIBS_TARGET):
 	$(MAKE) -C $(@D)
@@ -96,12 +107,14 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f clean; done
-	$(RM) $(OBJS) $(DEPS)
+	$(RM) $(OBJS_CLI) $(DEPS)
+	$(RM) $(OBJS_SER) $(DEPS)
 
 fclean: clean
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
-	$(RM) $(NAME)
+	$(RM) $(NAME_CLI)
+	$(RM) $(NAME_SER)
 
 re:
-    $(MAKE) fclean
-    $(MAKE) all
+	$(MAKE) fclean
+	$(MAKE) all

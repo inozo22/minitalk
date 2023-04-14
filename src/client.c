@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/12 17:39:50 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/14 17:41:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	client_action(int sig, siginfo_t *info, void *context)
 	_exit (0);
 }
 
-void	receiver(void action(int, siginfo_t *, void *))
+void	receiver(void/*  client_action(int, siginfo_t *, void *) */)
 {
 	struct sigaction	sa;
 
@@ -79,7 +79,7 @@ int	main(int ac, char **av)
 	srv_pid = (pid_t)ft_atoi(av[1]);
 	if (errno != 0 || srv_pid < 1)
 		return (0);
-	receiver(client_action);
+	receiver(/* client_action */);
 	send_str(srv_pid, av[2]);
 	return (0);
 }
