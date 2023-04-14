@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/13 17:48:13 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/14 12:11:42 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,15 @@ NAME_CLIENT		:= client
 
 LIBS			:= libft
 LIBS_TARGET		:= libft/libft.a
-INCS			:= inc/
+INCS			:= \
+					inc \
+					libft/inc
 
-SRC_DIR			:= src/
+SRC_DIR			:= src
 SRCS_SER		:= server.c
+SRCS_SER		:= $(SRCS_SER:%=$(SRC_DIR)/%)
 SRCS_CLI		:= client.c
-#SRCS			:= $(SRCS:%=$(SRC_DIR)/%)
+SRCS_CLI		:= $(SRCS_CLI:%=$(SRC_DIR)/%)
 
 BUILD_DIR		:= .build
 OBJS_SER		:= $(SRCS_SER:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
