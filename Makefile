@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/14 12:11:42 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/14 14:49:18 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,11 @@ OBJS_CLI		:= $(SRCS_CLI:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS_SER		:= $(OBJS_SER:.o=.d)
 DEPS_CLI		:= $(OBJS_CLI:.o=.d)
 
-CC				:= clang
+CC				:= gcc
 CFLAGS			:= -Wall -Wextra -Werror
-CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
-LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
-LDLIBS			:= $(addprefix -l,$(LIBS))
+#CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
+#LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
+#LDLIBS			:= $(addprefix -l,$(LIBS))
 
 #------------------------------------------------#
 #   UTENSILS                                     #
