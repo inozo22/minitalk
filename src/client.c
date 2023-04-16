@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/14 17:41:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/16 16:07:04 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	send_char(pid_t srv_pid, char c)
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 		{
-			printf("Holaaaaaa\n");//donde estas
+//			printf("Holaaaaaa\n");//donde estas
 			_exit (0);
 		}
 		usleep(100);
@@ -35,16 +35,16 @@ void	send_char(pid_t srv_pid, char c)
 
 void	send_str(pid_t srv_pid, char *str)
 {
-	struct timespec begin;
-	timespec_get(&begin, TIME_UTC);
+/* 	struct timespec begin;
+	timespec_get(&begin, TIME_UTC); */
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
 	}
-	struct timespec end;
+/* 	struct timespec end;
 	timespec_get(&end, TIME_UTC);
 	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
-	printf("Time it took to execute: %lf\n", time_spent);
+	printf("Time it took to execute: %lf\n", time_spent); */
 	send_char(srv_pid, '\0');
 }
 
@@ -57,12 +57,12 @@ void	client_action(int sig, siginfo_t *info, void *context)
 	_exit (0);
 }
 
-void	receiver(void/*  client_action(int, siginfo_t *, void *) */)
+void	receiver(void client_action(int, siginfo_t *, void *))
 {
 	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(struct sigaction));
-	sa.sa_sigaction = &client_action;
+	sa.sa_sigaction = client_action;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &sa, NULL);
@@ -79,7 +79,7 @@ int	main(int ac, char **av)
 	srv_pid = (pid_t)ft_atoi(av[1]);
 	if (errno != 0 || srv_pid < 1)
 		return (0);
-	receiver(/* client_action */);
+	receiver(client_action);
 	send_str(srv_pid, av[2]);
 	return (0);
 }
