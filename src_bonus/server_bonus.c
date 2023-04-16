@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/11 13:39:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/16 16:47:47 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ void	server_action(int sig, siginfo_t *info, void *context)
 		i = 0;
 		uc = 0;
 	}
+	printf("Line: %d\n", __LINE__);
 }
 
-void	receiver(void action(int, siginfo_t *, void *))
+void	receiver(void server_action(int, siginfo_t *, void *))
 {
 	struct sigaction	sa;
 
+	printf("Line: %d\n", __LINE__);
 	ft_bzero(&sa, sizeof(struct sigaction));
-	sa.sa_sigaction = &server_action;
+	sa.sa_sigaction = server_action;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_SIGINFO;
+	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &sa, NULL);
@@ -54,6 +56,7 @@ int	main(void)
 	pid = getpid();
 	ft_putnbr_fd(pid, 1);
 	ft_putchar_fd('\n', 1);
+	printf("Line: %d\n", __LINE__);
 	receiver(server_action);
 	while (1)
 		pause ();
