@@ -147,5 +147,5 @@ info-%:
 #   SPEC                                         #
 #------------------------------------------------#
 
-.PHONY: clean fclean re
+.PHONY: clean fclean re bonus
 .SILENT:
