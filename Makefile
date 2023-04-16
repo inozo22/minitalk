@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/16 15:45:23 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/16 13:48:27 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ NAME_CLI		:= client
 # LDFLAGS     linker flags
 # LDLIBS      libraries name
 
-LIBS			:= fts #lib/printf
+LIBS			:= ft #lib/printf
 LIBS_TARGET		:= lib/libft/libft.a 
 
 INCS			:= \
