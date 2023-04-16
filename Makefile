@@ -6,55 +6,115 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/13 16:39:56 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/16 15:17:13 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER			:= server
-CLIENT			:= client
-SERVER_BONUS	:= server_bonus
-CLIENT_BONUS	:= client_bonus
-CC				:= gcc
-FLAGS			:= -Wall -Werror -Wextra
-LIBS			:= -L./libft -lft
-LIBFT			:= libft.a
+#NAME			:= pancakes
+NAME_SER		:= server
+NAME_CLI		:= client
+#------------------------------------------------#
+#   INGREDIENTS                                  #
+#------------------------------------------------#
+# LIBS        libraries to be used
+# LIBS_TARGET libraries to be built
+## INCS        header file locations
+## SRC_DIR     source directory
+# SRCS        source files
+## BUILD_DIR   build directory
+# OBJS        object files
+# DEPS        dependency files
+## CC          compiler
+# CFLAGS      compiler flags
+# CPPFLAGS    preprocessor flags
+# LDFLAGS     linker flags
+# LDLIBS      libraries name
 
-SRCDIR			:= ./src/
-SRC_BONUSDIR	:= ./src_bonus/
+LIBS			:= lib/libft lib/printf
+LIBS_TARGET		:= \
+					lib/libft/libft.a \
+					lib/printf/libftprintf.a
 
-all : $(LIBFT) $(SERVER) $(CLIENT) #bonus
+INCS			:= \
+					inc \
+					lib/libft/inc \
+					lib/printf/inc
 
-#bonus : $(SERVER_BONUS) $(CLIENT_BONUS)
+SRC_DIR			:= src
+SRCS_SER		:= server.c
+SRCS_SER		:= $(SRCS_SER:%=$(SRC_DIR)/%)
+SRCS_CLI		:= client.c
+SRCS_CLI		:= $(SRCS_CLI:%=$(SRC_DIR)/%)
 
-$(LIBFT) : 
-	@make -C ./libft/
+BUILD_DIR		:= .build
+OBJS_SER		:= $(SRCS_SER:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+OBJS_CLI		:= $(SRCS_CLI:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+DEPS_SER		:= $(OBJS_SER:.o=.d)
+DEPS_CLI		:= $(OBJS_CLI:.o=.d)
 
-$(SERVER) : $(SRCDIR)$(SERVER).o inc/minitalk.h
-	@$(CC) $(SRCDIR)$(SERVER).o $(LIBS) -o $@
+CC				:= cc
+CFLAGS			:= -Wall -Wextra -Werror
+CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
+LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
+LDLIBS			:= $(addprefix -l,$(LIBS))
+#ライブラリを使ってビルドするには、3つのフラグが必要:
+#Iはコンパイラにlibヘッダファイルの場所を指示
+#Lはリンカにライブラリの場所を指示
+#lはこのライブラリの名前（従来のlibプレフィックスを除いたもの）
+#------------------------------------------------#
+#   UTENSILS                                     #
+#------------------------------------------------#
+# RM        force remove
+# MAKEFLAGS make flags
+# DIR_DUP   duplicate directory tree
 
-$(CLIENT) : $(SRCDIR)$(CLIENT).o inc/minitalk.h
-	@$(CC) $(SRCDIR)$(CLIENT).o $(LIBS) -o $@
+RM				:= rm -f
+MAKEFLAGS		+= --silent --no-print-directory
+DIR_DUP			= mkdir -p $(@D)
 
-#$(SERVER_BONUS) : $(SRC_BONUSDIR)$(SERVER_BONUS).o inc/minitalk.h
-#	@$(CC) $(SRC_BONUSDIR)$(SERVER_BONUS).o $(LIBS) -o $@
+#------------------------------------------------#
+#   RECIPES                                      #
+#------------------------------------------------#
+# all       default goal
+# $(NAME)   link .o -> archive
+# $(LIBS)   build libraries
+# %.o       compilation .c -> .o
+# clean     remove .o
+# fclean    remove .o + binary
+# re        remake default goal
+# run       run the program
+# info      print the default goal recipe
 
-#$(CLIENT_BONUS) : $(SRC_BONUSDIR)$(CLIENT_BONUS).o inc/minitalk.h
-#	@$(CC) $(SRC_BONUSDIR)$(CLIENT_BONUS).o $(LIBS) -o $@
+all: $(NAME_CLI) $(NAME_SER)
 
-%.o : $(SRCDIR)%.c
-	@$(CC) $(FLAGS) $< -c -I inc
+$(NAME_CLI): $(OBJS_CLI) $(LIBS_TARGET)
+	$(CC) $(LDFLAGS) $(OBJS_CLI) $(LDLIBS) -o $(NAME_CLI)
+	$(info CREATED $(NAME_CLI))
 
-#%.o : $(SRC_BONUSDIR)%.c
-#	@$(CC) $(FLAGS) $< -c -I inc
+$(NAME_SER): $(OBJS_SER) $(LIBS_TARGET)
+	$(CC) $(LDFLAGS) $(OBJS_SER) $(LDLIBS) -o $(NAME_SER)
+	$(info CREATED $(NAME_SER))
 
-clean :
-	@make clean -C libft
-	@rm -f $(SRCDIR)*.o
-#	@rm -f $(SRC_BONUSDIR)*.o
+$(LIBS_TARGET):
+	$(MAKE) -C $(@D)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	$(DIR_DUP)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(info CREATED $@)
+
+-include $(DEPS)
+
+clean:
+	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f clean; done
+	$(RM) $(OBJS_CLI) $(DEPS)
+	$(RM) $(OBJS_SER) $(DEPS)
 
 fclean: clean
-	@make fclean -C libft
-	@rm -f $(SERVER) $(CLIENT)
-#	@rm -f $(SERVER_BONUS) $(CLIENT_BONUS)
+	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
+	$(RM) $(NAME_CLI)
+	$(RM) $(NAME_SER)
 
-re: fclean all
+re:
+	$(MAKE) fclean
+	$(MAKE) all

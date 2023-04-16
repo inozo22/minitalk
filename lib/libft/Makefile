@@ -1,72 +1,98 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    2_Makefile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/18 19:03:51 by nimai             #+#    #+#              #
-#    Updated: 2023/04/13 16:41:41 by nimai            ###   ########.fr        #
+#    Created: 2023/04/16 14:48:52 by nimai             #+#    #+#              #
+#    Updated: 2023/04/16 14:48:52 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME        := libft.a
 
-SRCDIR = ./
-SRC = \
-ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
+#------------------------------------------------#
+#   INGREDIENTS                                  #
+#------------------------------------------------#
+## SRC_DIR     source directory
+# SRCS        source files
+## BUILD_DIR   build directory
+# OBJS        object files
+# DEPS        dependency files
+## CC          compiler
+# CFLAGS      compiler flags
+# CPPFLAGS    preprocessor flags
+# AR           command
+# ARFLAGS      ar flags
+
+SRC_DIR     := src
+SRCS        := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 ft_isdigit.c ft_isprint.c ft_itoa.c ft_memchr.c ft_memcmp.c ft_memcpy.c \
 ft_memmove.c ft_memset.c ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c \
 ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strncmp.c ft_strnstr.c \
-ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c get_next_line.c
-
-SRC_BONUS = \
+ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c get_next_line.c \
 ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c 
+SRCS        := $(SRCS:%=$(SRC_DIR)/%)
 
-OBJDIR = ./obj/
-OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-OBJ_BONUS = $(addprefix $(OBJDIR), $(SRC_BONUS:.c=.o))
+BUILD_DIR   := .build
+OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
+DEPS        := $(OBJS:.o=.d)
 
-PRINTF	:= ./printf
+CC          := cc
+CFLAGS      := -Wall -Wextra -Werror
+CPPFLAGS    := -MMD -MP -I include
+AR          := ar
+ARFLAGS     := -r -c -s
+#------------------------------------------------#
+#   UTENSILS                                     #
+#------------------------------------------------#
+# RM        force remove
+# MAKEFLAGS make flags
+# DIR_DUP   duplicate directory tree
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+RM          := rm -f
+MAKEFLAGS   += --silent --no-print-directory
+DIR_DUP     = mkdir -p $(@D)
 
-CLR_RMV		:= \033[0m
-RED		    := \033[1;31m
-GREEN		:= \033[1;32m
-YELLOW		:= \033[1;33m
-BLUE		:= \033[1;34m
-CYAN 		:= \033[1;36m
+#------------------------------------------------#
+#   RECIPES                                      #
+#------------------------------------------------#
+# all       default goal
+# $(NAME)   link .o -> library
+# %.o       compilation .c -> .o
+# clean     remove .o
+# fclean    remove .o + binary
+# re        remake default goal
 
-all: $(OBJDIR) $(NAME) bonus
+all: $(NAME)
 
-$(OBJDIR):
-	@mkdir -p $@
+$(NAME): $(OBJS) $(LIBS_TARGET)
+	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
+	$(info CREATED $@)
 
-$(OBJDIR)%.o : $(SRCDIR)%.c
-#	@make -C $(PRINTF)
-	@$(CC) -c $(CFLAGS) -o $@ $<
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	$(DIR_DUP)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ 
+	$(info CREATED $@)
 
-$(NAME): $(OBJ)
-	@echo "$(BLUE)--Compiling ${CLR_RMV} $(NAME) ${CLR_RMV}..."
-	@ar -rc $(NAME) $^
-
-bonus: $(OBJ_BONUS) $(NAME)
-	@ar -rc $(NAME) $^
-
-printf: $(OBJ_PRINTF) $(NAME)
-	@ar -rc $(NAME) $^
+-include $(DEPS)
 
 clean:
-	@rm -rf $(OBJDIR)
+	$(RM) $(OBJS) $(DEPS)
 
 fclean: clean
-#	@make fclean -C $(PRINTF)
-	@rm -f $(NAME)
+	$(RM) $(NAME)
 
-re: fclean all
+re:
+	$(MAKE) fclean
+	$(MAKE) all
 
-.PHONY: all, clean, fclean, re, bonus
+#------------------------------------------------#
+#   SPEC                                         #
+#------------------------------------------------#
+
+.PHONY: clean fclean re
+.SILENT:
