@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/16 13:48:27 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/17 16:38:33 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,10 @@ INCS			:= \
 					inc \
 					lib/libft/inc \
 
+INCS_B			:= \
+					inc_bonus \
+					lib/libft/inc \
+
 SRC_DIR			:= src
 B_SRC_DIR		:= src_bonus
 SRCS_SER		:= server.c
@@ -62,6 +66,7 @@ B_DEPS_CLI		:= $(B_OBJS_CLI:.o=.d)
 CC				:= cc
 CFLAGS			:= -Wall -Wextra -Werror
 CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
+CPPFLAGS_B		:= $(addprefix -I,$(INCS_B)) -MMD -MP
 LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS			:= $(addprefix -l,$(LIBS))
 #ライブラリを使ってビルドするには、3つのフラグが必要:
@@ -121,7 +126,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(BUILD_DIR)/%.o: $(B_SRC_DIR)/%.c
 	$(DIR_DUP)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) $(CPPFLAGS_B) -c -o $@ $<
 	$(info CREATED $@)
 
 -include $(DEPS_CLI) $(DEPS_SER) $(B_DEPS_CLI) $(B_DEPS_SER)

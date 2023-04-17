@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 16:18:39 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/17 16:46:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,4 @@ int	main(int ac, char **av)
 		return (0);
 	receiver(client_action);
 	send_str(srv_pid, av[2]);
-	return (0);
 }

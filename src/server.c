@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 10:06:05 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/17 16:28:17 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,4 @@ int	main(void)
 	receiver(server_action);
 	while (1)
 		pause ();
-	return (0);
 }
