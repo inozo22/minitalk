@@ -6,18 +6,18 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 16:39:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/17 17:18:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc_bonus/minitalk_bonus.h"
 
-void	server_action(int sig, siginfo_t *info, void *context)
+void	server_action(int sig, siginfo_t *info, void *uncontext)
 {
 	static int				i;
 	static unsigned char	uc;
 
-	(void)context;
+	(void)uncontext;
 	if (sig == SIGUSR2)
 		uc |= (1 << i);
 	i++;
