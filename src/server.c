@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 17:23:12 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/18 09:45:31 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	server_action(int sig, siginfo_t *info, void *uncontext)
 	if (i == 8)
 	{
 		if (uc == 0)
+		{
 			kill(info->si_pid, SIGUSR2);
+		}
 		else
 			write (1, &uc, 1);
 		i = 0;
