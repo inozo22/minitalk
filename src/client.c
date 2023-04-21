@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/21 10:50:08 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/21 17:36:19 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ void	send_char(pid_t srv_pid, char c)
 	int				i;
 	unsigned char	uc;
 
+	printf("c: %c\n", c);
 	uc = (unsigned char)c;
+	printf("uc: %c\n", uc);
 	i = -1;
 	while (++i < 8)
 	{
 		bit = (uc >> i) & 0x01;
+		printf("bit: %x\n", bit);
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 		{
-			_exit (0);
+			exit (1);
 		}
 		usleep(100);
 	}

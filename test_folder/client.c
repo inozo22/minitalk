@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 10:48:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/21 11:00:13 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/21 17:33:29 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	main(int ac, char **av)
 {
-	if (ac == 3)
+	pid_t	pid;
+	
+	if (ac != 3)
 	{
-
+		return (0);
 	}
-	else
-	{
-		
-	}
+	pid = ft
+	
 	return (0);
 }
