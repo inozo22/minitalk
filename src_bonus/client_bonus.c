@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 17:16:24 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/21 10:50:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc_bonus/minitalk_bonus.h"
+#include "minitalk_bonus.h"
 #include <time.h>// kesu!
 
 void	send_char(pid_t srv_pid, char c)

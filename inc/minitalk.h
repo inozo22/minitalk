@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 17:43:13 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/17 16:30:02 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/20 17:15:52 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,4 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/types.h>
-//ato de kesu
-# include <stdio.h>
-//comment
-
-
 #endif

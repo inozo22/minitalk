@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/18 09:45:31 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/21 10:50:16 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minitalk.h"
+#include "minitalk.h"
 
 void	server_action(int sig, siginfo_t *info, void *uncontext)
 {

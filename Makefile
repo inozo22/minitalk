@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/17 16:57:06 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/20 17:21:22 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ LDLIBS			:= $(addprefix -l,$(LIBS))
 # DIR_DUP   duplicate directory tree
 
 RM				:= rm -f
+rf				:= rm -rf
 MAKEFLAGS		+= --silent --no-print-directory
 DIR_DUP			= mkdir -p $(@D)
 
@@ -140,6 +141,7 @@ fclean: clean
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
 	$(RM) $(NAME_CLI) $(NAME_SER)
 	$(RM) $(NAME_CLI_B) $(NAME_SER_B)
+#	$(RF) *.dSYM
 
 re:
 	$(MAKE) fclean
