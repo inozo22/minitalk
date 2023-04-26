@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/20 17:21:22 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/26 13:17:14 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -154,5 +154,5 @@ info-%:
 #   SPEC                                         #
 #------------------------------------------------#
 
-.PHONY: clean fclean re bonus
+.PHONY: all clean fclean re bonus
 .SILENT:

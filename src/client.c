@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/26 12:13:46 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/26 15:56:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ void	send_char(pid_t srv_pid, char c)
 
 void	send_str(pid_t srv_pid, char *str)
 {
-	struct timespec begin;
-	timespec_get(&begin, TIME_UTC);
+	struct timespec begin;//
+	timespec_get(&begin, TIME_UTC);//
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
 	}
-	struct timespec end;
-	timespec_get(&end, TIME_UTC);
-	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
-	printf("Time that took to execute: %lf\n", time_spent);
+	struct timespec end;//
+	timespec_get(&end, TIME_UTC);//
+	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;//
+	printf("Time that took to execute: %lf\n", time_spent);//
 	send_char(srv_pid, '\0');
 }
 
@@ -53,7 +53,8 @@ void	client_action(int sig, siginfo_t *info, void *context)
 	(void)info;
 	if (sig == SIGUSR2)
 	{
-		write(1, "\nSuccess\n", 9);
+		//write(1, "\nSuccess\n", 9);
+		ft_printf("Success\n");
 	}
 	_exit (0);
 }

@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 14:48:52 by nimai             #+#    #+#              #
-#    Updated: 2023/04/16 13:48:46 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/26 16:09:24 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_get_next_line
 ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c 
 SRCS        := $(SRCS:%=$(SRC_DIR)/%)
+
+PRINTF_DIR	:= ft_printf
+FTPRINTF	:= $(PRINTF_DIR)/ftprintf.a
 
 BUILD_DIR   := .build
 OBJS        := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
@@ -69,9 +72,13 @@ DIR_DUP     = mkdir -p $(@D)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBS_TARGET)
+$(NAME): $(OBJS) $(FTPRINTF)
+	@mv $(FTPRINTF) $(NAME)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 	$(info CREATED $@)
+
+$(FTPRINTF):
+	$(MAKE) -C $(@D)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(DIR_DUP)
@@ -94,5 +101,5 @@ re:
 #   SPEC                                         #
 #------------------------------------------------#
 
-.PHONY: clean fclean re
+.PHONY: all clean fclean re
 .SILENT:
