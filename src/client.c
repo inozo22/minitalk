@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/21 17:36:19 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/26 12:13:46 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ void	send_char(pid_t srv_pid, char c)
 	int				i;
 	unsigned char	uc;
 
-	printf("c: %c\n", c);
 	uc = (unsigned char)c;
-	printf("uc: %c\n", uc);
 	i = -1;
 	while (++i < 8)
 	{
 		bit = (uc >> i) & 0x01;
-		printf("bit: %x\n", bit);
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 		{
 			exit (1);
@@ -46,7 +43,7 @@ void	send_str(pid_t srv_pid, char *str)
 	struct timespec end;
 	timespec_get(&end, TIME_UTC);
 	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
-	printf("Time it took to execute: %lf\n", time_spent);
+	printf("Time that took to execute: %lf\n", time_spent);
 	send_char(srv_pid, '\0');
 }
 
@@ -56,7 +53,7 @@ void	client_action(int sig, siginfo_t *info, void *context)
 	(void)info;
 	if (sig == SIGUSR2)
 	{
-		ft_putendl_fd("Success\n", 1);
+		write(1, "\nSuccess\n", 9);
 	}
 	_exit (0);
 }
