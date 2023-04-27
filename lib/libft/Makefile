@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 14:48:52 by nimai             #+#    #+#              #
-#    Updated: 2023/04/26 16:09:24 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/26 17:01:37 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ ARFLAGS     := -r -c -s
 # DIR_DUP   duplicate directory tree
 
 RM          := rm -f
+RF			:= rm -rf
 MAKEFLAGS   += --silent --no-print-directory
 DIR_DUP     = mkdir -p $(@D)
 
@@ -88,9 +89,12 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 -include $(DEPS)
 
 clean:
+	$(MAKE) -C $(PRINTF_DIR) clean
 	$(RM) $(OBJS) $(DEPS)
+	$(RF) $(BUILD_DIR)
 
 fclean: clean
+	$(MAKE) -C $(PRINTF_DIR) fclean
 	$(RM) $(NAME)
 
 re:

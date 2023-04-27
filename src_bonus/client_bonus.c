@@ -6,12 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/21 10:50:22 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/27 12:03:06 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
-#include <time.h>// kesu!
 
 void	send_char(pid_t srv_pid, char c)
 {
@@ -26,7 +25,7 @@ void	send_char(pid_t srv_pid, char c)
 		bit = (uc >> i) & 0x01;
 		if (kill(srv_pid, SIGUSR1 + bit) == -1)
 		{
-			_exit (0);
+			exit (1);
 		}
 		usleep(100);
 	}
@@ -34,26 +33,19 @@ void	send_char(pid_t srv_pid, char c)
 
 void	send_str(pid_t srv_pid, char *str)
 {
-	struct timespec begin;
-	timespec_get(&begin, TIME_UTC);
 	while (*str)
 	{
 		send_char(srv_pid, *str++);
 	}
-	struct timespec end;
-	timespec_get(&end, TIME_UTC);
-	double time_spent = (end.tv_sec - begin.tv_sec) + (end.tv_nsec - begin.tv_nsec) / 1000000000.0;
-	printf("Time it took to execute: %lf\n", time_spent);
 	send_char(srv_pid, '\0');
 }
 
-void	client_action(int sig, siginfo_t *info, void *context)
+void	client_action(int sig, siginfo_t *info, void *ucontext)
 {
-	(void)context;
+	(void)ucontext;
 	(void)info;
 	if (sig == SIGUSR2)
-		ft_putendl_fd("Success\n", 1);
-	_exit (0);
+		ft_printf("Success\n");
 }
 
 void	receiver(void client_action(int, siginfo_t *, void *))

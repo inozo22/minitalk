@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 10:21:26 by nimai             #+#    #+#              #
-#    Updated: 2023/04/26 13:17:14 by nimai            ###   ########.fr        #
+#    Updated: 2023/04/26 17:39:25 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,10 +69,6 @@ CPPFLAGS		:= $(addprefix -I,$(INCS)) -MMD -MP
 CPPFLAGS_B		:= $(addprefix -I,$(INCS_B)) -MMD -MP
 LDFLAGS			:= $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS			:= $(addprefix -l,$(LIBS))
-#ライブラリを使ってビルドするには、3つのフラグが必要:
-#Iはコンパイラにlibヘッダファイルの場所を指示
-#Lはリンカ-にライブラリの場所を指示
-#lはこのライブラリの名前（従来のlibプレフィックスを除いたもの）
 #------------------------------------------------#
 #   UTENSILS                                     #
 #------------------------------------------------#
@@ -81,7 +77,7 @@ LDLIBS			:= $(addprefix -l,$(LIBS))
 # DIR_DUP   duplicate directory tree
 
 RM				:= rm -f
-rf				:= rm -rf
+RF				:= rm -rf
 MAKEFLAGS		+= --silent --no-print-directory
 DIR_DUP			= mkdir -p $(@D)
 
@@ -141,7 +137,7 @@ fclean: clean
 	for f in $(dir $(LIBS_TARGET)); do $(MAKE) -C $$f fclean; done
 	$(RM) $(NAME_CLI) $(NAME_SER)
 	$(RM) $(NAME_CLI_B) $(NAME_SER_B)
-#	$(RF) *.dSYM
+	$(RF) $(BUILD_DIR)
 
 re:
 	$(MAKE) fclean

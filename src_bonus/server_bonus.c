@@ -6,18 +6,18 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/21 10:50:29 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/27 10:04:33 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-void	server_action(int sig, siginfo_t *info, void *uncontext)
+void	server_action(int sig, siginfo_t *info, void *ucontext)
 {
 	static int				i;
 	static unsigned char	uc;
 
-	(void)uncontext;
+	(void)ucontext;
 	if (sig == SIGUSR2)
 		uc |= (1 << i);
 	i++;
@@ -48,12 +48,7 @@ void	receiver(void server_action(int, siginfo_t *, void *))
 
 int	main(void)
 {
-	pid_t	pid;
-
-	ft_putstr_fd("pid: ", 1);
-	pid = getpid();
-	ft_putnbr_fd(pid, 1);
-	ft_putchar_fd('\n', 1);
+	ft_printf("PID: %d\n", getpid());
 	receiver(server_action);
 	while (1)
 		pause ();

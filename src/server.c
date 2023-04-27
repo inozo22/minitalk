@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/24 09:46:55 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/27 11:40:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,16 @@ void	server_action(int sig, siginfo_t *info, void *ucontext)
 	static unsigned char	uc;
 
 	(void)ucontext;
+	(void)info;
 	if (sig == SIGUSR2)
 		uc |= (1 << i);
 	i++;
 	if (i == 8)
 	{
-		if (uc == 0)
+		if (uc != 0)
 		{
-			kill(info->si_pid, SIGUSR2);
-		}
-		else
 			write (1, &uc, 1);
+		}
 		i = 0;
 		uc = 0;
 	}
@@ -50,9 +49,7 @@ void	receiver(void server_action(int, siginfo_t *, void *))
 
 int	main(void)
 {
-	ft_putstr_fd("pid: ", 1);
-	ft_putnbr_fd(getpid(), 1);
-	ft_putchar_fd('\n', 1);
+	ft_printf("PID: %d\n", getpid());
 	receiver(server_action);
 	while (1)
 		pause ();
