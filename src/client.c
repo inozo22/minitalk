@@ -6,11 +6,13 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/27 14:08:59 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/28 16:33:53 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+//Only works for macOS
 
 void	send_char(pid_t srv_pid, char c)
 {

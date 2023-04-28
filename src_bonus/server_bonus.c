@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:54:56 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/27 10:04:33 by nimai            ###   ########.fr       */
+/*   Updated: 2023/04/28 15:00:12 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	receiver(void server_action(int, siginfo_t *, void *))
 	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_sigaction = server_action;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
+	sa.sa_flags = /* SA_RESTART |  */SA_SIGINFO;
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &sa, NULL);
