@@ -53,6 +53,7 @@ ARFLAGS     := -r -c -s
 #   UTENSILS                                     #
 #------------------------------------------------#
 # RM        force remove
+# RF		remove folder
 # MAKEFLAGS make flags
 # DIR_DUP   duplicate directory tree
 

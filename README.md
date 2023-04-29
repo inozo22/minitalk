@@ -130,3 +130,40 @@ Linuxシステムは、このタイプの保留中のシグナルがある場合
 |29|SIGIO|Terminate|I/O now possible on a descriptor|
 |30|SIGPWR|Terminate|Power failure|
 |31|SIGSYS|Terminate|Bad system call|
+
+## 5. List of signals on mac
+
+|Number|Name|Default Action|Description|
+|-----|-----|-----|-----|
+|1|SIGHUP|Terminate|Terminal line hangup or parent process terminated|
+|2|SIGINT|Terminate|Interrupt from keyboard(ctrl-c)|
+|3|SIGQUIT|Terminate|Quit from keyboard(ctrl-\)|
+|4|SIGILL|Terminate|Illegal instruction|
+|5|SIGTRAP|Core|Trace trap|
+|6|SIGABRT|Core|Signal from abort function|
+|7|SIGEMT|----|-|
+|8|SIGFPE|Core|Floating-point exception|
+|9|SIGKILL|Terminate|Kill program|
+|10|SIGBUS|Terminate|Bus error|
+|11|SIGSEGV|Core|Invalid memory reference (segfault)|
+|12|SIGSYS|Terminate|Bad system call|
+|13|SIGPIPE|Terminate|Write in pipe with no reader|
+|14|SIGALRM|Terminate|Timer signal from alarm function|
+|15|SIGTERM|Terminate|Software termination signal|
+|16|SIGURG|Ignore|Urgent condition on socket|
+|17|SIGSTOP|Stop|Stop signal not from terminal|
+|18|SIGTSTP|Stop|Stop signal from terminal(ctrl-z)|
+|19|SIGCONT|Ignore|Continue process if stopped|
+|20|SIGCHLD|Ignore|Child process has stopped or terminated|
+|21|SIGTTIN|Stop|Background process read from terminal|
+|22|SIGTTOU|Stop|Background process wrote to terminal|
+|23|SIGIO|Terminate|I/O now possible on a descriptor|
+|24|SIGXCPU|Terminate|CPU time limit exceeded|
+|25|SIGXFSZ|Terminate|File size limit exceeded|
+|26|SIGVTALRM|Terminate|Virtual timer expired|
+|27|SIGPROF|Terminate|Profiling timer expired|
+|28|SIGWINCH|Ignore|Window size changed|
+|29|SIGPWR|Terminate|Power failure|
+|30|SIGUSR1|Terminate|User-defined signal 1|
+|31|SIGUSR2|Terminate|User-defined signal 2|
+
