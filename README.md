@@ -15,11 +15,6 @@
 	<b>The purpose of this project is to code a small data exchange program using UNIX signals. This program only works on macOS(´･ω･｀)</b><br>
 </p>
 
-## Error control
-- Number of argument is not 3 (ac != 3)
-- Server's PID is more than 1.
-- No error after get server's PID.
-
 ## Making programs
 
 Cloning the repo
