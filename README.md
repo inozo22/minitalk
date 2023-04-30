@@ -31,26 +31,16 @@ To compile client & server
 ```bash
 $ make
 ```
-To compile client
-
-```bash
-$ make client
-```
-To compile server
-
-```bash
-$ make server
-```
 
 ## How to use
 
-Execute Server
+1. Execute Server
 
 ```bash
 $ ./server
 ```
 
-Execute client with the Server PID and a string to send
+2. Execute client with the Server PID and a string to send
 
 ```bash
 $ ./client server_PID "whatever you want to send"
