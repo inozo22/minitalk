@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 12:16:20 by nimai             #+#    #+#             */
-/*   Updated: 2023/05/01 11:08:09 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 15:08:44 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*read_memo(int fd, char *memo)
 	return (memo);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	static char	*memo[1024];
 	char		*ret;
