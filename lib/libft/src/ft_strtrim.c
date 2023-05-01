@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:37:42 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/16 15:30:01 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:10:38 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 static	int	get_first(char *s1, char *set)
 {

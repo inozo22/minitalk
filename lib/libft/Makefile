@@ -6,7 +6,7 @@
 #    By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/16 14:48:52 by nimai             #+#    #+#              #
-#    Updated: 2023/04/26 17:01:37 by nimai            ###   ########.fr        #
+#    Updated: 2023/05/01 11:04:18 by nimai            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ NAME        := libft.a
 # CPPFLAGS    preprocessor flags
 # AR           command
 # ARFLAGS      ar flags
+
+INCS		:= inc
 
 SRC_DIR     := src
 SRCS        := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
@@ -46,7 +48,7 @@ DEPS        := $(OBJS:.o=.d)
 
 CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
-CPPFLAGS    := -MMD -MP -I include
+CPPFLAGS    := -MMD -MP -I $(INCS)
 AR          := ar
 ARFLAGS     := -r -c -s
 #------------------------------------------------#

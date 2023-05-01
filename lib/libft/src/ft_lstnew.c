@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 19:00:38 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/16 15:28:49 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:08:57 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 t_list	*ft_lstnew(void *content)
 {

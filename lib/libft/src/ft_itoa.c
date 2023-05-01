@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:28:50 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/16 15:27:06 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:08:22 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 unsigned int	get_len(long n)
 {

@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:37:19 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/16 15:29:58 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:10:34 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {

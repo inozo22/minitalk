@@ -6,11 +6,11 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 11:37:02 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/16 15:29:54 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:10:30 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 {
