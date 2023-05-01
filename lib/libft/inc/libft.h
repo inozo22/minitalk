@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 19:03:42 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/26 15:58:20 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/01 11:19:45 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include "../ft_printf/inc/ft_printf.h"
+# include "../ft_printf_for_minitalk/inc/ft_printf.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -72,6 +72,6 @@ void		ft_lstdelone(t_list *lst, void (*del)(void *));
 void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-char		*get_next_line(int fd);
+char		*ft_get_next_line(int fd);
 
 #endif
