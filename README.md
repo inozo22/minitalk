@@ -19,7 +19,7 @@
 
 Cloning the repo
 ```bash
-git clone --recursive https://github.com/inozo22/minitalk.git
+$ git clone --recursive https://github.com/inozo22/minitalk.git
 ```
 To compile client & server
 
