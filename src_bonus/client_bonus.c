@@ -6,7 +6,7 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/28 13:13:44 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/03 16:50:59 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	client_action(int sig, siginfo_t *info, void *ucontext)
 	(void)ucontext;
 	(void)info;
 	if (sig == SIGUSR2)
-		ft_printf("Success\n");
+		write(1, "Success\n", 8);
 }
 
 void	receiver(void client_action(int, siginfo_t *, void *))
