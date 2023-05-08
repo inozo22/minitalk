@@ -6,13 +6,45 @@
 /*   By: nimai <nimai@student.42urduliz.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 17:33:59 by nimai             #+#    #+#             */
-/*   Updated: 2023/04/28 16:33:53 by nimai            ###   ########.fr       */
+/*   Updated: 2023/05/08 09:29:58 by nimai            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
 //Only works for macOS
+
+//20230507 This function is for test if it works on Linux
+/* void	send_char(pid_t srv_pid, char c)
+{
+	int				bit;
+	int				i;
+	unsigned char	uc;
+
+	uc = (unsigned char)c;
+	i = -1;
+	while (++i < 8)
+	{
+		usleep(500);
+		bit = (uc >> i) & 0x01;
+		if (bit == 0)
+		{
+			if (kill(srv_pid, SIGUSR1) == -1)
+			{
+				exit (1);
+			}
+		}
+		else if (bit == 1)
+		{
+			if (kill(srv_pid, SIGUSR2) == -1)
+			{
+				exit (1);
+			}
+		}
+		usleep(500);
+	}
+} */
+//20230507 This function is for test if it works on Linux
 
 void	send_char(pid_t srv_pid, char c)
 {
